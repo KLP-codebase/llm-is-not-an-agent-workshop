@@ -1,0 +1,39 @@
+{
+  "student": "Nimal (CSE, Level 1, Semester 2)",
+  "week": {
+    "Monday": [
+      { "time": "08:15-10:15", "module": "Programming Fundamentals", "type": "Lecture", "venue": "Sumanadasa Hall" },
+      { "time": "10:30-12:30", "module": "Mathematics", "type": "Lecture", "venue": "Civil Auditorium" },
+      { "time": "13:30-16:30", "module": "Programming Fundamentals", "type": "Lab", "venue": "CSE Lab 1" }
+    ],
+    "Tuesday": [
+      { "time": "08:15-10:15", "module": "Data Structures & Algorithms", "type": "Lecture", "venue": "Sumanadasa Hall" },
+      { "time": "10:30-12:30", "module": "Digital Systems", "type": "Lecture", "venue": "ENTC Auditorium" },
+      { "time": "13:30-15:30", "module": "Communication Skills", "type": "Tutorial", "venue": "ELTU Room 2" }
+    ],
+    "Wednesday": [
+      { "time": "08:15-10:15", "module": "Mathematics", "type": "Tutorial", "venue": "Civil Auditorium" },
+      { "time": "13:30-16:30", "module": "Data Structures & Algorithms", "type": "Lab", "venue": "CSE Lab 2" }
+    ],
+    "Thursday": [
+      { "time": "08:15-10:15", "module": "Digital Systems", "type": "Lecture", "venue": "ENTC Auditorium" },
+      { "time": "10:30-12:30", "module": "Data Structures & Algorithms", "type": "Lecture", "venue": "Sumanadasa Hall" },
+      { "time": "13:30-16:30", "module": "Digital Systems", "type": "Lab", "venue": "ENTC Digital Lab" }
+    ],
+    "Friday": [
+      { "time": "08:15-10:15", "module": "Programming Fundamentals", "type": "Lecture", "venue": "Sumanadasa Hall" },
+      { "time": "10:30-12:30", "module": "Mathematics", "type": "Lecture", "venue": "Civil Auditorium" }
+    ],
+    "Saturday": [],
+    "Sunday": []
+  },
+  "midSem": {
+    "startsInDays": 10,
+    "exams": [
+      { "module": "Mathematics", "dayOffset": 0, "time": "09:00" },
+      { "module": "Programming Fundamentals", "dayOffset": 1, "time": "09:00" },
+      { "module": "Data Structures & Algorithms", "dayOffset": 2, "time": "13:30" },
+      { "module": "Digital Systems", "dayOffset": 3, "time": "09:00" }
+    ]
+  }
+}
