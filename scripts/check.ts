@@ -58,7 +58,7 @@ const errorText = (r: Run) =>
   r.stderr.split("\n").filter((l) => l && !l.startsWith("__CHECK__")).slice(0, 6).join("\n   ");
 
 function stepFile(folder: string) {
-  return path.join("steps", folder, useSolution ? "solution.ts" : "start.ts");
+  return useSolution ? path.join("scripts", "solutions", `${folder}.ts`) : path.join("steps", folder, "start.ts");
 }
 
 // ---------------------------------------------------------------------------

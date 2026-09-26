@@ -38,7 +38,7 @@ In this repo you build Campus Buddy, a University of Moratuwa student assistant,
 | `npm run doctor` | Checks your setup |
 | `npm run 1`, `npm run 2` | Runs the step 1 and 2 demos |
 | `npm run 3`, `npm run 4` | Runs **your** code for steps 3 and 4 (`start.ts`) |
-| `npm run 3:solution`, `npm run 4:solution` | Runs the finished version |
+| `npm run 3:solution`, `npm run 4:solution` | Writes the finished version to `solution.ts` next to `start.ts`, then runs it |
 | `npm run check 3`, `npm run check 4` | Tests your code against a scripted model. No key, no internet, instant |
 | `npm run 5a` … `npm run 5d` | The step 5 harness, built up one idea at a time |
 | `npm run check 5` | Checks the skills you've written |

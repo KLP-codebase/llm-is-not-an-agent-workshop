@@ -8,7 +8,7 @@ npm run 4:solution  # the finished version
 
 ## You already wrote a framework
 
-`createAgent` does exactly what your step 3 loop does: call the model, run the tools it asks for, push the results, repeat until it stops asking. Compare `../03-agent-loop/solution.ts` with `start.ts` here. Same agent, same tools, and the loop is gone.
+`createAgent` does exactly what your step 3 loop does: call the model, run the tools it asks for, push the results, repeat until it stops asking. Compare `../03-agent-loop/solution.ts` (run `npm run 3:solution` if it isn't there yet) with `start.ts` here. Same agent, same tools, and the loop is gone.
 
 ## Memory across turns
 

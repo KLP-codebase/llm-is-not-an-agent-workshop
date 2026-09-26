@@ -3,3 +3,4 @@ node_modules/
 steps/05-deep-agents/*/workspace/output/*
 !steps/05-deep-agents/*/workspace/output/.gitkeep
 .DS_Store
+steps/*/solution.ts
