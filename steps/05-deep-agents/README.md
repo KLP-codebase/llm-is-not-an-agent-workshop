@@ -9,7 +9,20 @@ npm run 5d   # + memory
 
 Remember your `while` loop from step 3? A **harness** is that loop plus what it needs to finish real work: a planner, a file system, skills and memory, all built in. This step uses [Deep Agents](https://docs.langchain.com/oss/javascript/deepagents/overview).
 
-Each file is the previous one plus one or two lines. Diff them to see exactly what each idea costs.
+Each `index.ts` is the previous one plus one or two lines. Diff them to see exactly what each idea costs.
+
+Each step is its own folder, and 5b, 5c and 5d each have their own `workspace/` (the agent's disk). So what's in a workspace is exactly what that step adds:
+
+```
+a-state-backend/        no workspace: files live in state
+b-filesystem-backend/
+  workspace/output/     where the agent writes
+c-skills/
+  workspace/skills/     + skills
+d-memory/
+  workspace/AGENTS.md   + a memory file
+skill-template/         copy this to write your own skill
+```
 
 Try this in each one: **"Plan my week before the mid-sem"**
 
@@ -37,9 +50,9 @@ The default is `StateBackend`: files live *inside the agent's state*, next to th
 backend: new FilesystemBackend({ rootDir: workspace, virtualMode: true }),
 ```
 
-Same agent, and now `write_file` writes real files. The agent's `/` is the `workspace/` folder. `virtualMode: true` keeps it inside that folder.
+Same agent, and now `write_file` writes real files. The agent's `/` is `b-filesystem-backend/workspace/`. `virtualMode: true` keeps it inside that folder.
 
-After a run, open `workspace/output/plan.md`.
+After a run, open `b-filesystem-backend/workspace/output/plan.md`.
 
 Other backends: `StoreBackend` (a database, shared across threads) and `CompositeBackend` (different folders go to different backends, e.g. `/memories/` to a store and everything else to state).
 
@@ -53,11 +66,11 @@ skills: ["/skills/"],
 
 A skill is a folder with a `SKILL.md`. The agent sees only each skill's `name` and `description` up front. When a task matches, it reads the full file (watch for `📖 read_file(/skills/study-planner/SKILL.md)`). So you can have a hundred skills without bloating the prompt.
 
-See `workspace/skills/study-planner/SKILL.md`.
+See `c-skills/workspace/skills/study-planner/SKILL.md`.
 
 ### Write your own skill (optional)
 
-1. Copy `skill-template/` into `workspace/skills/` and rename the folder, e.g. `workspace/skills/dsa-exam-prep/`.
+1. Copy `skill-template/` into `c-skills/workspace/skills/` and rename the folder, e.g. `c-skills/workspace/skills/dsa-exam-prep/`.
 2. Set `name:` to the folder name and write a clear `description:`.
 3. Write the instructions, the way you'd explain it to a friend.
 4. `npm run check 5`, then `npm run 5c` and ask something that needs it.
@@ -68,7 +81,7 @@ See `workspace/skills/study-planner/SKILL.md`.
 memory: ["/AGENTS.md"],
 ```
 
-Step 4's checkpointer remembers a conversation until the program stops. This is different: `workspace/AGENTS.md` is loaded into the system prompt on every run, and the agent edits it when it learns something about you.
+Step 4's checkpointer remembers a conversation until the program stops. This is different: `d-memory/workspace/AGENTS.md` is loaded into the system prompt on every run, and the agent edits it when it learns something about you. (5d keeps the skills from 5c too, so its workspace has its own copy of `skills/study-planner/`.)
 
 ```
 You: I'm Nimal, CSE, and I'm weak at DSA
@@ -76,7 +89,7 @@ You: I'm Nimal, CSE, and I'm weak at DSA
 You: exit
 ```
 
-Run `npm run 5d` again and ask for a plan. It still knows. Open `workspace/AGENTS.md` to see what it saved. (Reset it with `git checkout steps/05-deep-agents/workspace/AGENTS.md`.)
+Run `npm run 5d` again and ask for a plan. It still knows. Open `d-memory/workspace/AGENTS.md` to see what it saved. (Reset it with `git checkout steps/05-deep-agents/d-memory/workspace/AGENTS.md`.)
 
 | | Checkpointer (step 4) | Memory file (5d) |
 | --- | --- | --- |

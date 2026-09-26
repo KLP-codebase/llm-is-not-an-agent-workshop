@@ -1,5 +1,5 @@
 node_modules/
 .env
-steps/05-deep-agents/workspace/output/*
-!steps/05-deep-agents/workspace/output/.gitkeep
+steps/05-deep-agents/*/workspace/output/*
+!steps/05-deep-agents/*/workspace/output/.gitkeep
 .DS_Store

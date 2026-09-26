@@ -134,7 +134,7 @@ async function check4() {
 }
 
 function check5() {
-  const skillsDir = path.join(ROOT, "steps", "05-deep-agents", "workspace", "skills");
+  const skillsDir = path.join(ROOT, "steps", "05-deep-agents", "c-skills", "workspace", "skills");
   const folders = fs.readdirSync(skillsDir, { withFileTypes: true }).filter((d) => d.isDirectory());
   console.log(`Checking skills in ${path.relative(ROOT, skillsDir)} ...\n`);
 

@@ -10,10 +10,10 @@ import path from "node:path";
 import { createDeepAgent, FilesystemBackend } from "deepagents";
 import { todoListMiddleware } from "langchain";
 import { MemorySaver } from "@langchain/langgraph";
-import { ask } from "../../lib/cli.ts";
-import { harnessModel } from "../../lib/model.ts";
-import { runDeepAgent } from "../../lib/print.ts";
-import { getTimetable, getWeather, todayText } from "../../lib/tools.ts";
+import { ask } from "../../../lib/cli.ts";
+import { harnessModel } from "../../../lib/model.ts";
+import { runDeepAgent } from "../../../lib/print.ts";
+import { getTimetable, getWeather, todayText } from "../../../lib/tools.ts";
 
 const workspace = path.join(import.meta.dirname, "workspace");
 

@@ -7,7 +7,7 @@ description: One or two sentences. What this skill helps with, and WHEN the agen
 
 <!--
 How to use this template:
-1. Copy this folder into workspace/skills/ and rename it, e.g. workspace/skills/dsa-exam-prep/
+1. Copy this folder into c-skills/workspace/skills/ and rename it, e.g. c-skills/workspace/skills/dsa-exam-prep/
 2. Change `name:` above to match the folder name exactly (lowercase, hyphens).
 3. Write the description. This is what makes the agent pick your skill.
 4. Write the instructions below, the way you'd explain it to a friend.
