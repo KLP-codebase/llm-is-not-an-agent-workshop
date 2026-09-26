@@ -7,7 +7,7 @@ import path from "node:path";
 import { ROOT, env } from "./env.ts";
 
 // ---------------------------------------------------------------------------
-// getWeather: live weather from Open-Meteo (free, no key)
+// getWeather: live weather from Open-Meteo, with wttr.in as a backup (both free, no key)
 // ---------------------------------------------------------------------------
 
 const WEATHER_CODES: Record<number, string> = {
@@ -25,13 +25,20 @@ const FALLBACK_WEATHER =
 const cache = new Map<string, { at: number; text: string }>();
 const TEN_MINUTES = 10 * 60 * 1000;
 
-async function fetchJson(url: string) {
-  const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json() as Promise<any>;
+// One retry, because a room full of students on one Wi-Fi drops the odd request.
+async function fetchJson(url: string, tries = 2): Promise<any> {
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status} from ${new URL(url).host}`);
+    return await res.json();
+  } catch (err) {
+    if (tries <= 1) throw err;
+    await new Promise((r) => setTimeout(r, 500));
+    return fetchJson(url, tries - 1);
+  }
 }
 
-async function weatherFor(city: string): Promise<string> {
+async function openMeteo(city: string): Promise<string> {
   const geo = await fetchJson(
     `https://geocoding-api.open-meteo.com/v1/search?count=1&name=${encodeURIComponent(city)}`,
   );
@@ -54,20 +61,41 @@ async function weatherFor(city: string): Promise<string> {
   return [now, "Forecast:", ...days].join("\n");
 }
 
+// Backup provider. Only 3 days of forecast, but it's a different service on a different network.
+async function wttr(city: string): Promise<string> {
+  const w = await fetchJson(`https://wttr.in/${encodeURIComponent(city)}?format=j1`);
+  const c = w.current_condition[0];
+  const name = w.nearest_area?.[0]?.areaName?.[0]?.value ?? city;
+  const now = `${name} now: ${c.temp_C}°C, ${c.weatherDesc[0].value.toLowerCase()}, wind ${c.windspeedKmph} km/h.`;
+  const days = w.weather.map((d: any) =>
+    `${d.date}: ${d.hourly[4].weatherDesc[0].value.toLowerCase()}, ${d.mintempC}-${d.maxtempC}°C, ` +
+    `${Math.max(...d.hourly.map((h: any) => Number(h.chanceofrain)))}% chance of rain`,
+  );
+  return [now, "Forecast:", ...days].join("\n");
+}
+
 export const getWeather = tool(
   async ({ city }) => {
     if (env.fake) return FALLBACK_WEATHER; // `npm run check` works offline
     const key = city.toLowerCase();
     const hit = cache.get(key);
     if (hit && Date.now() - hit.at < TEN_MINUTES) return hit.text;
-    try {
-      const text = await weatherFor(city);
-      cache.set(key, { at: Date.now(), text });
-      return text;
-    } catch {
-      console.warn("⚠️  Open-Meteo is unreachable, using sample weather instead.");
-      return FALLBACK_WEATHER;
+
+    const errors: string[] = [];
+    for (const [provider, fetchWeather] of [["Open-Meteo", openMeteo], ["wttr.in", wttr]] as const) {
+      try {
+        const text = await fetchWeather(city);
+        cache.set(key, { at: Date.now(), text });
+        return text;
+      } catch (err) {
+        errors.push(`${provider}: ${(err as Error).message}`);
+      }
     }
+
+    // Both down: an older real answer beats made-up sample data.
+    if (hit) return hit.text;
+    console.warn(`⚠️  Weather services unreachable (${errors.join("; ")}), using sample weather instead.`);
+    return FALLBACK_WEATHER;
   },
   {
     name: "getWeather",
