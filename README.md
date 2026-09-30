@@ -14,13 +14,15 @@ In this repo you build Campus Buddy, a University of Moratuwa student assistant,
 
 > **An agent is an LLM, plus state, plus tools, running in a loop.**
 
+Built for a two-hour workshop at CSE, University of Moratuwa, on 1 Oct 2026. The [talk page](https://saai.syvendra.com/talks/llm-is-not-an-agent) has the setup steps and the [slides](https://saai.syvendra.com/talks/llm-is-not-an-agent/slides).
+
 ## Setup (do this before the session)
 
 1. **Install Node 24 LTS** from [nodejs.org](https://nodejs.org). Anything from Node 22 up works.
 2. **Get a free Gemini API key** at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Sign in with a Google account. No card needed.
 3. **Clone and install:**
    ```bash
-   git clone <repo-url> llm-is-not-an-agent
+   git clone https://github.com/saai-syvendra/llm-is-not-an-agent.git
    cd llm-is-not-an-agent
    npm install
    ```
