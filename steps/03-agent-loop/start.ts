@@ -38,7 +38,7 @@ while (true) {
   //
   // TODO (a): replace `false` so the loop keeps going while the model is asking for tools.
   //           Hint: reply.tool_calls is a list. When is it "asking"?
-  while (false) {
+  while (false) { //while(false) must be replaced by while(reply.tools_calls?.length){
     for (const call of reply.tool_calls ?? []) {
       console.log(`  🔧 ${call.name}(${JSON.stringify(call.args)})`);
 
@@ -46,10 +46,10 @@ while (true) {
       //   1. find it:        toolsByName[call.name]
       //   2. run it:         await ....invoke(call.args)
       //   3. hand it back:   messages.push(new ToolMessage({ content: String(result), tool_call_id: call.id! }))
-    }
+    }                                                                          
 
-    // TODO (b2): ask the model again with the updated messages,
-    //            store the answer in `reply`, and push it onto `messages`.
+    // TODO (b2): ask the model again with the updated messages,               let reply = await model.invoke(messages);  
+    //            store the answer in `reply`, and push it onto `messages`.    messages.store(reply); actually its messages.push(reply)
   }
 
   say(reply.text);
